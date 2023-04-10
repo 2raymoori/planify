@@ -1,25 +1,35 @@
 import {Dimensions, StyleSheet} from 'react-native';
+
 const height = Dimensions.get('window').height;
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    position: 'relative',
+  },
   image: {
     width: '100%',
-    height: height * 0.65,
+    flex: 1,
+    height: height * 0.75,
   },
-  footerSection: {
+  layer: {
+    // flex:1,
+    height: 60,
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
     backgroundColor: 'white',
-    height: height * 0.5,
-    zIndex: 1,
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
-    position: 'absolute',
-    bottom: -(height * 0.3),
+  },
+  footerSection: {
+    flex: 1,
+    backgroundColor: 'white',
     width: '100%',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    borderColor: 'red',
     paddingHorizontal: 48,
-    paddingVertical: 48,
+    paddingBottom: 48,
   },
   loginBtnContainer: {
     backgroundColor: '#403572',
@@ -31,7 +41,7 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     fontStyle: 'normal',
-    fontSize: 15,
+    fontSize: 20,
     fontWeight: 800,
   },
   signupBtnContainer: {
@@ -44,8 +54,8 @@ const styles = StyleSheet.create({
   signupBtnText: {
     color: 'white',
     textAlign: 'center',
-    fontSize: 15,
-    fontWeight: 800,
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   footerHeader: {
     color: '#173147',
@@ -63,7 +73,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontStyle: 'normal',
     fontWeight: 400,
-    fontSize: 15,
+    fontSize: 17,
     lineHeight: 20,
     letterSpacing: -0.24,
     marginTop: 16,
