@@ -78,7 +78,6 @@ const styles = StyleSheet.create({
     letterSpacing: -0.24,
     marginTop: 16,
     marginBottom: 40,
-
     color: '#8B97A8',
   },
 });

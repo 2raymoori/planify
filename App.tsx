@@ -10,6 +10,8 @@ import {SafeAreaView} from 'react-native';
 import Onboarding from './src/Screen/auth/Onboarding';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import Login from './src/Screen/auth/Login/index.Login';
+import SignUp from "./src/Screen/auth/Signup/index.signup";
 
 function App() {
   const StackNavigator = createStackNavigator();
@@ -17,6 +19,8 @@ function App() {
     <SafeAreaView style={{flex: 1}}>
       <NavigationContainer>
         <StackNavigator.Navigator>
+          <StackNavigator.Screen options={{headerShown:false}} name={"signUp"} component={SignUp} />
+          <StackNavigator.Screen options={{headerShown:false}} name={'Login'} component={Login} />
           <StackNavigator.Screen
             options={{headerShown: false}}
             name={'Onboarding'}
