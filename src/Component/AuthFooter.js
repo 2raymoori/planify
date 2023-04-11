@@ -2,10 +2,11 @@ import React, {memo} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
 const AuthFooter = props => {
+  //  nav={props.navigation} rightText={'Sign in!'
   return (
     <View style={styles.container}>
       <Text style={styles.leftText}>{props.leftText}</Text>
-      <Text style={styles.rightText}>{props.rightText}</Text>
+      <Text onPress={()=>{props.rightText === "Sign in!" ? props.nav.navigate("Login") : props.nav.navigate("signUp")  }} style={styles.rightText}>{props.rightText}</Text>
     </View>
   );
 };

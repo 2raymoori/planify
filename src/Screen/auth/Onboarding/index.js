@@ -1,26 +1,16 @@
 // @ts-ignore
 import React, {memo} from 'react';
-import {
-  Dimensions,
-  Image,
-  Platform,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Image, Text, View} from 'react-native';
 
-const height = Dimensions.get('window').height;
-const platformType = Platform.OS;
 import styles from './styles';
 import Button from '../../shared/Button';
 
-const Onboarding = () => {
-  console.log(platformType, ' :: ', height);
+const Onboarding = props => {
   const onBtnLoginClick = () => {
-    console.log('Login');
+    props.navigation.navigate('Login');
   };
   const onBtnSignupClick = () => {
-    console.log('Signup');
+    props.navigation.navigate('signUp');
   };
   return (
     <View style={styles.container}>
@@ -56,6 +46,5 @@ const Onboarding = () => {
       </View>
     </View>
   );
-  ß;
 };
 export default memo(Onboarding);

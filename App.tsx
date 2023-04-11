@@ -5,28 +5,37 @@
  * @format
  */
 
-import React from 'react';
-import {SafeAreaView} from 'react-native';
-import Onboarding from './src/Screen/auth/Onboarding';
+import React, {useEffect, useState} from 'react';
+import {SafeAreaView, Text} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import Login from './src/Screen/auth/Login/index.Login';
-import SignUp from "./src/Screen/auth/Signup/index.signup";
+
+import auth from '@react-native-firebase/auth';
+import Route from './src/Routes/Routes';
 
 function App() {
-  const StackNavigator = createStackNavigator();
+  // Set an initializing state whilst Firebase connects
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState();
+  console.log('user::>> ', user);
+  // Handle user state changes
+  function onAuthStateChanged(user) {
+    setUser(user);
+    if (initializing) setInitializing(false);
+    if (user) {
+      return <Text>Welcome</Text>;
+    }
+  }
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
+  }, []);
+
+  if (initializing) return null;
   return (
     <SafeAreaView style={{flex: 1}}>
       <NavigationContainer>
-        <StackNavigator.Navigator>
-          <StackNavigator.Screen options={{headerShown:false}} name={"signUp"} component={SignUp} />
-          <StackNavigator.Screen options={{headerShown:false}} name={'Login'} component={Login} />
-          <StackNavigator.Screen
-            options={{headerShown: false}}
-            name={'Onboarding'}
-            component={Onboarding}
-          />
-        </StackNavigator.Navigator>
+        <Route />
       </NavigationContainer>
     </SafeAreaView>
   );
