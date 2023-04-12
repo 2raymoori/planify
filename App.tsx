@@ -7,7 +7,7 @@
 import Animated from 'react-native-reanimated';
 import 'react-native-gesture-handler';
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, Text} from 'react-native';
+import { LogBox, SafeAreaView, Text } from "react-native";
 import {NavigationContainer} from '@react-navigation/native';
 
 import auth from '@react-native-firebase/auth';
@@ -15,6 +15,7 @@ import Route from './src/Routes/Routes';
 
 
 function App() {
+  // LogBox.ignoreAllLogs();
   // Set an initializing state whilst Firebase connects
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
