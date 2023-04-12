@@ -8,17 +8,23 @@ import {
   ScrollView,
   FlatList,
   StyleSheet,
-  TouchableOpacity, Alert,
-} from "react-native";
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import styles from './styles.Addtask';
 import Title from '../../../Component/Title';
 import Input from '../../../Component/Input';
 import CategoryList from '../../../Component/CategoryList';
 import Button from '../../shared/Button';
 import DatePicker from 'react-native-date-picker';
+import firestore from '@react-native-firebase/firestore';
 
 const AddTask = props => {
-  const [formData, setFormData] = useState({taskDesc: '',taskType:-1,selectedDate:""});
+  const [formData, setFormData] = useState({
+    taskDesc: '',
+    taskType: -1,
+    selectedDate: '',
+  });
   const [selectedCategory, setSelectedCategory] = useState(-1);
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
@@ -39,25 +45,38 @@ const AddTask = props => {
       [refName]: data,
     }));
   };
-  const alertDisplay = (msg,btnTxt) => {
-Alert.alert("Error",msg,[{
-      text:"OK",
-    }]);
-  }
+  const alertDisplay = (msg,title = 'Error', btn = 'Ok') => {
+    Alert.alert(title, msg, [
+      {
+        text: btn,
+      },
+    ]);
+  };
   const submitData = () => {
-    if(formData.taskDesc.trim() === ''){
+    if (formData.taskDesc.trim() === '') {
       alertDisplay('Please enter task description');
       return;
-    }
-    else if(formData.taskType === -1){
+    } else if (formData.taskType === -1) {
       alertDisplay('Please select task type / Priority');
       return;
-    }
-    else if(formData.selectedDate.trim() ===""){
+    } else if (formData.selectedDate.trim() === '') {
       alertDisplay('Please select a valid datedate');
       return;
     }
     console.log('formData::>> ', formData);
+
+    firestore()
+      .collection('Tasks')
+      .doc('ABCd')
+      .set({
+        name: formData.taskDesc,
+        date: formData.selectedDate,
+        category: formData.taskType,
+      })
+      .then(() => {
+        console.log('User added!');
+        alertDisplay('Task added successfully','Success',  'Thank You.');
+      });
   };
 
   return (
@@ -143,7 +162,7 @@ Alert.alert("Error",msg,[{
               const justDate = JSON.stringify(date).split('T')[0];
               setFormData(prevState => ({
                 ...prevState,
-                ['selectedDate']: justDate.substr(1,justDate.length),
+                ['selectedDate']: justDate.substr(1, justDate.length),
               }));
               setDate(date);
             }}
