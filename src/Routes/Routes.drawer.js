@@ -18,13 +18,14 @@ const DrawerNavigation = props => {
     <Drawer.Navigator
       useLegacyImplementation={true}
       drawerContent={props => <CustomDrawerContent {...props} />}
-      // screenOptions={{
+      screenOptions={{
+        headerShown: false,
       //   drawerStyle: {
       //     backgroundColor: '#c6cbef',
       //     color:"red"
       //     // width: 240,
       //   },
-      // }}
+      }}
     >
       <Drawer.Screen
         options={{drawerLabelStyle: textStyle}}
@@ -36,11 +37,11 @@ const DrawerNavigation = props => {
         name={'AddTask'}
         component={AddTask}
       />
-      <Drawer.Screen
-        options={{drawerLabelStyle: textStyle}}
-        name={'Task'}
-        component={Task}
-      />
+      {/*<Drawer.Screen*/}
+      {/*  options={{drawerLabelStyle: textStyle}}*/}
+      {/*  name={'Task'}*/}
+      {/*  component={Task}*/}
+      {/*/>*/}
     </Drawer.Navigator>
   );
 };
