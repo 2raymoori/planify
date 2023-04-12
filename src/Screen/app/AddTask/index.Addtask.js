@@ -8,8 +8,8 @@ import {
   ScrollView,
   FlatList,
   StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+  TouchableOpacity, Alert,
+} from "react-native";
 import styles from './styles.Addtask';
 import Title from '../../../Component/Title';
 import Input from '../../../Component/Input';
@@ -19,7 +19,7 @@ import DatePicker from 'react-native-date-picker';
 
 const AddTask = props => {
   const [formData, setFormData] = useState({taskDesc: '',taskType:-1,selectedDate:""});
-  const [selectedCategory, setSelectedCategory] = useState(1);
+  const [selectedCategory, setSelectedCategory] = useState(-1);
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
 
@@ -34,13 +34,29 @@ const AddTask = props => {
     props.navigation.goBack();
   }
   const processInput = (data, refName) => {
-    console.log(data, ' :: ', refName);
     setFormData(prevState => ({
       ...prevState,
       [refName]: data,
     }));
   };
+  const alertDisplay = (msg,btnTxt) => {
+Alert.alert("Error",msg,[{
+      text:"OK",
+    }]);
+  }
   const submitData = () => {
+    if(formData.taskDesc.trim() === ''){
+      alertDisplay('Please enter task description');
+      return;
+    }
+    else if(formData.taskType === -1){
+      alertDisplay('Please select task type / Priority');
+      return;
+    }
+    else if(formData.selectedDate.trim() ===""){
+      alertDisplay('Please select a valid datedate');
+      return;
+    }
     console.log('formData::>> ', formData);
   };
 
@@ -110,6 +126,7 @@ const AddTask = props => {
             style={styles.dateTextContainer}
             onPress={() => setOpen(true)}>
             <Image
+              resizeMode={'contain'}
               source={require('../../../assets/calendar.png')}
               style={styles.icon}
             />
