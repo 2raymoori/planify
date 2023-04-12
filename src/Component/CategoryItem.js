@@ -13,12 +13,7 @@ const CategoryItem = props => {
       fontWeight: 800,
     };
   }
-  console.log(
-    'FROM CATEGORYITEM ::?? ',
-    props.itemId,
-    ' ::: current selected item:: ',
-    props.selectedItem,
-  );
+
   return (
     <TouchableOpacity
       onPress={() => {

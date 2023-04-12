@@ -3,8 +3,9 @@ import {TextInput, StyleSheet, View, Platform} from 'react-native';
 
 const platform = Platform.OS;
 const Input = props => {
-  const {borderWidth,borderColor,backgroundColor} = props;
-  const acutalStyle = platform === 'ios' ? styles.textContainerIOS : styles.textInput
+  const {borderWidth, borderColor, backgroundColor} = props;
+  const acutalStyle =
+    platform === 'ios' ? styles.textContainerIOS : styles.textInput;
   const processInput = e => {
     props.processInput(e, props.name);
   };
@@ -13,7 +14,7 @@ const Input = props => {
       <TextInput
         onChangeText={processInput}
         {...props}
-        style={[acutalStyle,{borderWidth,borderColor,backgroundColor}]}
+        style={[acutalStyle, {borderWidth, borderColor, backgroundColor}]}
         placeholder={props.title}
       />
     </View>

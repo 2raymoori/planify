@@ -2,10 +2,10 @@ import React, {memo} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
 const Title = props => {
-  const {color,fontWeight,fontSize} = props;
+  const {color,fontWeight,paddingTop,fontSize,marginBottom,paddingBottom} = props;
   return (
     <View>
-      <Text style={[styles.text,{color,fontWeight,fontSize }]}>{props.text}</Text>
+      <Text style={[styles.text,{color,fontWeight,paddingTop,paddingBottom,fontSize,marginBottom }]}>{props.text}</Text>
     </View>
   );
 };
