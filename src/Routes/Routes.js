@@ -5,14 +5,46 @@
  * @format
  */
 
-import React, {memo} from 'react';
+import React, {memo,useEffect,useState} from 'react';
 import Onboarding from '../Screen/auth/Onboarding';
 import {createStackNavigator} from '@react-navigation/stack';
 import Login from '../Screen/auth/Login/index.Login';
 import SignUp from "../Screen/auth/Signup/index.signup";
+import auth from "@react-native-firebase/auth";
+import { Button, Text } from "react-native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import DrawerNavigation from "./Routes.drawer";
+import Home from "../Screen/app/Home/index.home";
+import AddTask from "../Screen/app/AddTask/index.Addtask";
+import Task from "../Screen/app/Task/index.Task";
+// import CreateDrawerNavigator from "@react-navigation/drawer/src/navigators/createDrawerNavigator";
+
 
 function Route() {
   const StackNavigator = createStackNavigator();
+  const [user,setUser] = useState(null);
+  const [initializing,setInitialzing] = useState(true);
+
+  const Drawer = createDrawerNavigator();
+  console.log('userss::>> ', user);
+
+  const onAuthStateChanged = (user)=>{
+    setUser(user);
+    if(initializing){
+      setInitialzing(false)
+    }
+  }
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber;
+  }, []);
+
+  if(user){
+    return (
+      <DrawerNavigation />
+    )
+  }
   return (
     <StackNavigator.Navigator>
       <StackNavigator.Screen
