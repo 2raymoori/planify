@@ -7,12 +7,13 @@
 import Animated from 'react-native-reanimated';
 import 'react-native-gesture-handler';
 import React, {useEffect, useState} from 'react';
-import { LogBox, SafeAreaView, Text } from "react-native";
+import {LogBox, SafeAreaView, Text} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 
 import auth from '@react-native-firebase/auth';
 import Route from './src/Routes/Routes';
-
+import {Provider} from 'react-redux';
+import store from './src/Rdux/Store';
 
 function App() {
   // LogBox.ignoreAllLogs();
@@ -35,11 +36,13 @@ function App() {
 
   if (initializing) return null;
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <NavigationContainer>
-        <Route />
-      </NavigationContainer>
-    </SafeAreaView>
+    <Provider store={store}>
+      <SafeAreaView style={{flex: 1}}>
+        <NavigationContainer>
+          <Route />
+        </NavigationContainer>
+      </SafeAreaView>
+    </Provider>
   );
 }
 

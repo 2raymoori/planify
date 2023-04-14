@@ -5,9 +5,6 @@ import {
   Text,
   View,
   Image,
-  ScrollView,
-  FlatList,
-  StyleSheet,
   TouchableOpacity,
   Alert,
 } from 'react-native';
@@ -18,8 +15,10 @@ import CategoryList from '../../../Component/CategoryList';
 import Button from '../../shared/Button';
 import DatePicker from 'react-native-date-picker';
 import firestore from '@react-native-firebase/firestore';
+import { useSelector } from "react-redux";
 
 const AddTask = props => {
+  const user = useSelector(state => state.user?.data);
   const [formData, setFormData] = useState({
     taskDesc: '',
     taskType: -1,
@@ -67,11 +66,12 @@ const AddTask = props => {
 
     firestore()
       .collection('Tasks')
-      .doc('ABCd')
-      .set({
+      .add({
         name: formData.taskDesc,
         date: formData.selectedDate,
         category: formData.taskType,
+        checked:false,
+        userId: user?.uid,
       })
       .then(() => {
         console.log('User added!');
