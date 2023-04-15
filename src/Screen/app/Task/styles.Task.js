@@ -7,6 +7,9 @@ const styles = StyleSheet.create({
     position: 'relative',
   backgroundColor: '#fff',
   },
-
+  textStrike:{
+    textDecorationLine: 'line-through',
+  }
 });
+
 export default styles;

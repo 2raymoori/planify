@@ -22,10 +22,14 @@ const Home = props => {
         console.log('Total tasks: ', querySnapshot.size);
         const taskList = [];
         querySnapshot.forEach(documentSnapshot => {
-          console.log('User ID: ', documentSnapshot.id, documentSnapshot.data());
-          taskList.push({...(documentSnapshot.data() || {}),uid:documentSnapshot.id});
+
+          console.log("!!!! TASKKK LLLOOOTTTT @@RRAAYY ######",documentSnapshot.id);
+          // console.log('User ID: ', documentSnapshot.id, documentSnapshot.data());
+          // taskList.push({...documentSnapshot.data(),docId:documentSnapshot.id});
+          taskList.push({docId:documentSnapshot.id,...(documentSnapshot.data() || {})});
         });
         dispatch(setTasks(taskList));
+        // console.log("!!!!FROM @@RRAAYY HOME ######3",taskList)
       });
 
   }, [user,dispatch]);
@@ -40,3 +44,5 @@ const Home = props => {
   );
 };
 export default memo(Home);
+//maitouray816@gmail.com
+//4472897njieS_!

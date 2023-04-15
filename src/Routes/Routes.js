@@ -43,7 +43,7 @@ function Route() {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber;
   }, []);
-
+  console.log("FROM ROUTES...",user);
   if(user){
     return (
       <DrawerNavigation />

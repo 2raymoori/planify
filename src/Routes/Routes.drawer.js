@@ -20,11 +20,6 @@ const DrawerNavigation = props => {
       drawerContent={props => <CustomDrawerContent {...props} />}
       screenOptions={{
         headerShown: false,
-      //   drawerStyle: {
-      //     backgroundColor: '#c6cbef',
-      //     color:"red"
-      //     // width: 240,
-      //   },
       }}
     >
       <Drawer.Screen
@@ -37,11 +32,6 @@ const DrawerNavigation = props => {
         name={'AddTask'}
         component={AddTask}
       />
-      {/*<Drawer.Screen*/}
-      {/*  options={{drawerLabelStyle: textStyle}}*/}
-      {/*  name={'Task'}*/}
-      {/*  component={Task}*/}
-      {/*/>*/}
     </Drawer.Navigator>
   );
 };

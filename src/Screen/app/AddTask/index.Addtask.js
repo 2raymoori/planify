@@ -15,9 +15,11 @@ import CategoryList from '../../../Component/CategoryList';
 import Button from '../../shared/Button';
 import DatePicker from 'react-native-date-picker';
 import firestore from '@react-native-firebase/firestore';
-import { useSelector } from "react-redux";
+import {useDispatch, useSelector} from 'react-redux';
+import {setTasks} from '../../../Rdux/Tasks';
 
 const AddTask = props => {
+  const dispatcher = useDispatch();
   const user = useSelector(state => state.user?.data);
   const [formData, setFormData] = useState({
     taskDesc: '',
@@ -44,14 +46,14 @@ const AddTask = props => {
       [refName]: data,
     }));
   };
-  const alertDisplay = (msg,title = 'Error', btn = 'Ok') => {
+  const alertDisplay = (msg, title = 'Error', btn = 'Ok') => {
     Alert.alert(title, msg, [
       {
         text: btn,
       },
     ]);
   };
-  const submitData = () => {
+  const submitData = async () => {
     if (formData.taskDesc.trim() === '') {
       alertDisplay('Please enter task description');
       return;
@@ -63,20 +65,41 @@ const AddTask = props => {
       return;
     }
     console.log('formData::>> ', formData);
+    const dataToSave = {
+      name: formData.taskDesc,
+      date: formData.selectedDate,
+      category: formData.taskType,
+      checked: false,
+      userId: user?.uid,
+    };
 
     firestore()
       .collection('Tasks')
-      .add({
-        name: formData.taskDesc,
-        date: formData.selectedDate,
-        category: formData.taskType,
-        checked:false,
-        userId: user?.uid,
-      })
-      .then(() => {
+      .add(dataToSave)
+      .then(async() => {
         console.log('User added!');
         alertDisplay('Task added successfully','Success',  'Thank You.');
-      });
+
+        const task = await firestore()
+          .collection('Tasks')
+          .get();
+        const taskList = [];
+        task.docs.forEach(doc => {
+          console.log("DOC FROM ADD ::>> ",doc['_data']);
+          taskList.push({...doc['_data'], docId: doc.id});
+        });
+        dispatcher(setTasks(taskList));
+        // {"category": 3, "checked": false, "date": "2023-04-15", "docId": "fqwYrFrO2ofHJjFuMtTZ",
+        // "name": "Werwer Alex", "userId": "Ri4OlRpuRlZochM6n931zVlwvvG3"}
+    });
+    // const task = await firestore()
+    //   .collection('Tasks')
+    //   .get();
+    // const taskList = [];
+    // task.docs.forEach(doc => {
+    //   console.log("DOC FROM ADD ::>> ",{...doc['_data'],docId:doc.id}, "DOCCC ID::>> ",doc.id);
+    //   taskList.push({...doc['_data'], docId: doc.id});
+    // });
   };
 
   return (
